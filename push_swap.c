@@ -6,38 +6,80 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/15 01:35:15 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/16 05:53:28 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "push_swap.h"
 
-int check_numbers_digit(char *num)
+void	check_is_empty(char *str)
+{
+	int i;
+	int j;
+
+	j = 0;
+	i = 0;
+	while (str[i])
+	{
+		if(ft_isdigit(str[i]))
+			j++;
+		i++;
+	}
+	if(j == 0)
+	{
+		printf("error empty\n");
+		exit(1);
+	}
+}
+
+
+void check_sort(t_stack *a)
+{
+	int i;
+	
+	i = a->content;
+	while(a->next)
+	{
+		a = a->next;
+		if(a->content > i)
+		i = a->content;
+		else
+			return;
+	}
+	if(!a->next)
+	{
+		printf("it already sorted");
+		exit(0);
+	}
+}
+
+void check_numbers_digit(char *num)
 {
 	int i;
 	int c;
-	
+	int j;
+
+	j = 0;
 	c = 0;
-	i = 0;
-	while(num[i])
+	i = -1;
+	while(num[++i])
 	{
 		if(ft_isdigit(num[i]))
-		c = 1; 
-		if ((ft_isdigit(num[i]) || num[i] == ' ' )|| 
-		(num[i] == '-' && num[i + 1] != '-'))
-		i++;
-		else
+			c = 1;
+		if (num[i] == '-')
+			j++;
+		if((c == 1 && num[i] == '-') || (num[i] != '-' && !ft_isdigit(num[i])))
 		{
 			printf("error; some arguments aren’t integers\n");
 			exit(1);
 		}
 	}
-	if(c == 1)
-		return 1;
-	printf("error; some arguments aren’t integers\n");
-	exit(1);
+	if(c != 1 || j > 1)
+	{
+		printf("error;> some arguments aren’t integers\n");
+		exit(1);
+	}
 }
-
 
 t_stack *make_stack(char **str)
 {
@@ -94,6 +136,7 @@ int main (int argc, char **argv)
 	i = 1;
 	while(i < argc)
 	{
+		check_is_empty(argv[i]);
 		n.num = ft_strjoin(n.num,argv[i]);
 		i++;
 	}
@@ -106,41 +149,8 @@ int main (int argc, char **argv)
 	}
 	a = make_stack(str);
 	duplicat_number(a);
+	check_sort(a);
+	indice(a);
+	sort_size(&a,ft_lstsize(a));
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// i = 0;
-	// j = 0;
-	// while (str[i])
-	// {
-	// 	check_numbers(str[i]);
-	// 	j = 0;
-	// 	while(j < i)
-	// 	{
-	// 		if(i != j && !ft_strncmp(str[i],str[j], 11))
-	// 			{
-	// 				printf("Error duplicat number\n");
-	// 				exit(1);	
-	// 			}
-	// 		j++;
-	// 	}
-	// 	printf("%s\n",str[i]);
-	// 	i++;
-	// }

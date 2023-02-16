@@ -7,6 +7,9 @@ void sa(t_stack *a)
 	i = a->content;
 	a->content = a->next->content;
 	a->next->content = i;
+	i = a->pos;
+	a->pos = a->next->pos;
+	a->next->pos = i;
 }
 
 void ss(t_stack *a,t_stack *b)
@@ -27,17 +30,6 @@ void pa(t_stack **a,t_stack **b)
 	*b = tmp; 
 }
 
-void pb(t_stack **a,t_stack **b)
-{
-	t_stack *tmp;
-
-	if(!*a)
-		return;
-	tmp = *a;
-	*a = tmp->next;
-	tmp->next = *b;
-	*b = tmp; 
-}
 
 void ra(t_stack **a)
 {
@@ -55,28 +47,33 @@ void ra(t_stack **a)
 	tmp2->next = NULL;
 }
 
-int main ()
+void rr(t_stack **a,t_stack **b)
 {
-	t_stack *s;
-	t_stack *t;
+	ra(a);
+	ra(b);
+}
 
+void rra(t_stack **a)
+{
+	t_stack *tmp;
+	t_stack *tmp2;
 
-	s = ft_lstnew(2);
-	ft_lstadd_back(&s,ft_lstnew(3));
-	ft_lstadd_back(&s,ft_lstnew(4));
-	t = s;
-	while(t)
-	{
-		printf("%d ",t->content);
-		t = t->next;
-	}
-	ra(&s);
-	printf("\n");
-	while(s)
-	{
-		printf("%d ",s->content);
-		s = s->next;
-	}
+	if(!*a)
+		return;
+	tmp = *a;
+	tmp2 = *a;
+	while(tmp->next)
+	tmp = tmp->next;
+	while(tmp2->next != tmp)
+	tmp2 = tmp2->next;
+	tmp2->next = NULL;
+	tmp->next = *a;
+	*a = tmp;
+}
 
+void rrr(t_stack **a,t_stack **b)
+{
+	rra(a);
+	rra(b);
 }
 
