@@ -4,6 +4,9 @@ void sa(t_stack *a)
 {
 	int i;
 
+	if(!a)
+		return;
+	printf("sa\n");
 	i = a->content;
 	a->content = a->next->content;
 	a->next->content = i;
@@ -24,6 +27,7 @@ void pa(t_stack **a,t_stack **b)
 
 	if(!*a)
 		return;
+	printf("pa\n");
 	tmp = *a;
 	*a = tmp->next;
 	tmp->next = *b;
@@ -38,6 +42,7 @@ void ra(t_stack **a)
 
 	if(!*a)
 		return;
+	printf("ra\n");
 	tmp = *a;
 	tmp2 = *a;
 	*a = (*a)->next;
@@ -60,6 +65,7 @@ void rra(t_stack **a)
 
 	if(!*a)
 		return;
+	printf("rra\n");
 	tmp = *a;
 	tmp2 = *a;
 	while(tmp->next)

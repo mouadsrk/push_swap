@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/16 05:53:28 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/16 22:01:18 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void check_sort(t_stack *a)
 {
 	int i;
 	
+	if(!a)
+		return;
 	i = a->content;
 	while(a->next)
 	{
@@ -127,7 +129,8 @@ int main (int argc, char **argv)
 	int i;
 	int j;
 	int w;
-	t_stack *a;
+	t_stack *a ,*tmp,*b;
+	b = NULL;
 	if(argc == 1)
 	{
 		printf("Error arg!\n");
@@ -151,6 +154,19 @@ int main (int argc, char **argv)
 	duplicat_number(a);
 	check_sort(a);
 	indice(a);
-	sort_size(&a,ft_lstsize(a));
+	// tmp = a;
+	// while(tmp)
+	// {
+	// 	printf("indice = %d valeur %d\n",tmp->pos, tmp->content);
+	// 	tmp = tmp->next;
+	// }
+	sort_size(&a,&b,ft_lstsize(a));
+	tmp = a;
+	while(tmp)
+	{
+		printf("indice = %d valeur %d\n",tmp->pos, tmp->content);
+		tmp = tmp->next;
+	}
+	
 
 }
