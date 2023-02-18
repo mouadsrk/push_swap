@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 05:28:32 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/18 07:40:57 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/18 23:51:44 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,30 +136,8 @@ int get_pos(t_stack *a,int pos)
 		a = a->next;
 		i++;
 	}
-	return i;
+	return -1;
 }
-
-// int get_chunck(t_stack *a,t_data *d)
-// {
-// 	int i;
-
-// 	d->holt_first = -1;
-// 	d->holt_second = -1;
-// 	i = 0;
-// 	while(a)
-// 	{
-// 		if(a->pos <= d->chunck && d->holt_first == -1 )
-// 		{
-// 			d->holt_first = i;
-// 			d->holt_second = i;
-// 		}
-// 		else if(a->pos <= d->chunck && d->holt_first != -1 )
-// 			d->holt_second = i;
-// 		i++;
-// 		a = a->next;
-// 	}
-// 	return i;
-// }
 
 
 void sort_5(t_stack **a,t_stack **b)
@@ -181,108 +159,110 @@ void sort_5(t_stack **a,t_stack **b)
 }
 
 
-// int make_data(t_data *d, t_stack **a ,  t_stack **b)
-// {
-// 	get_chunck(*a,d);	
-// 		if(d->holt_second == -1 && d->holt_first == -1)
-// 			return 1;
-// 	d->first_move = get_pos(*a,d->holt_first);
-// 	d->seconde_move = ft_lstsize(*a) - get_pos(*a,d->holt_first);
-// 		if(d->first_move >= d->seconde_move)
-// 			while((*a)->pos != d->holt_first)
-// 				ra(a,"ra /n");
-// 			if((*a)->pos == d->holt_first)
-// 				pa(a , b, "pb \n");
-// 		else
-// 		while((*a)->pos != d->holt_second)
-// 				rra(a,"rra /n");
-// 		if((*a)->pos == d->holt_second)
-// 			pa(a , b, "pb \n");
-// }
 
-// void sort_100(t_stack **a,t_stack **b ,int size)
-// {
-// 	t_data d;
-// 	t_stack *tmp;
-// 	d.chunck = 19;
-// 	while(size > 3)
-// 	{
-// 		if(d.chunck > size)
-// 			d.chunck = size - 3;
-// 		while(make_data(&d,a,b) == 0)
-// 		{
-		
-// 		}
-// 		d.chunck += 20;
-// 		size = ft_lstsize(*a);
-// 	}
-// 	sort_3(a);
-// 	while(*b)
-// 		pa(b,a,"pa\n");
-// }
 
-void check_size(t_stack **a,int size)
+
+
+// next modification
+
+int get_chunck(t_stack *a,t_data *d)
 {
-	t_stack *tmp;
-	t_stack *tmp2;
-	
-	tmp = *a;
-	while(tmp)
+	int i;
+
+	d->holt_first = -1;
+	d->holt_second = -1;
+	i = 0;
+	while(a)
 	{
-		tmp2 = *a;
-		while(tmp2 != tmp->next)
+		if(a->pos <= d->chunck && d->holt_first == -1 )
 		{
-			if(tmp->content >= tmp2->content)
-				tmp->log += 1;
-			tmp2 = tmp2->next;
+			d->holt_first = a->pos;
+			d->holt_second = a->pos;
 		}
-		tmp = tmp->next;
-	}	
+		else if(a->pos <= d->chunck && d->holt_first != -1 )
+			d->holt_second = a->pos;
+		i++;
+		a = a->next;
+	}
+	return i;
 }
 
+
+int push_b(t_data *d, t_stack **a ,  t_stack **b)
+{
+	if(!*a)
+		return 1;		
+	get_chunck(*a,d);	
+		if(d->holt_second == -1 && d->holt_first == -1)
+			return 1;
+	d->first_move = get_pos(*a,d->holt_first);
+	d->seconde_move = ft_lstsize(*a) - get_pos(*a,d->holt_first) - 1;
+	if(d->first_move <= d->seconde_move )
+	{
+		while((*a)->pos != d->holt_first)
+			ra(a,"ra\n");
+			if((*a)->pos == d->holt_first)
+			{
+				printf("push pos = %d\n",(*a)->pos);
+				pa(a , b, "pb\n");
+				if((*b)->pos >= d->chunck / 2)
+					if(*b && (ft_lstsize(*b)) != 1)
+						ra(b,"rb\n");
+			}
+		}
+		else
+		{
+		while((*a)->pos != d->holt_second && d->holt_second != -1)
+				rra(a,"rra\n");
+		if((*a)->pos == d->holt_second)
+		{
+			printf("push pos = %d\n",(*a)->pos);
+			pa(a , b, "pb\n");
+				if((*b)->pos >= d->chunck / 2 && (ft_lstsize(*b)) != 1)
+				{
+					ra(b,"rb\n");
+				}
+		}
+		}
+		return 0;
+}
 
 
 void sort_100(t_stack **a,t_stack **b ,int size)
 {
+	t_data d;
 	t_stack *tmp;
+	int i;
 	
-	int	i ;
-	
-	check_size(a , size);
-	*a = ft_lstlast(*a);
-	i = (*a)->log - 1;
-	while((*a)->previous)
+	d.chunck = size / 4 - 1;
+	printf("c%d\n",d.chunck);
+	while(*a)
 	{
-		tmp = *a;
-		while(tmp->previous)
+		i = 0;
+		while(i == 0)
 		{
-			if((*a)->log < tmp->log && tmp->log <= i)
-			{
-				(*a)->dis = 0;
-				break;
-			}
-			tmp = tmp->previous;
+			i = push_b(&d,a,b);
+				tmp = *a;
+			// while(tmp)
+			// {
+			// 	printf("pos = %d valeur  %d\n",tmp->pos, tmp->content);
+			// 	tmp = tmp->next;
+			// }
+			printf("\n");
 		}
-		if((*a)->dis == 1)
-			i = (*a)->log - 1;
-		tmp = (*a);
-		while(tmp->previous)
-		{	
-			if((*a)->dis == 1 && (*a)->content < tmp->content && (*a)->log >= tmp->log )
-				(tmp)->dis = 0;
-			tmp = tmp->previous;
-		}
-		(*a) =(*a)->previous;
+		d.chunck += size / 5 - 1;
 	}
-	*a = ft_lstfirst(*a);
-	tmp = (*a);
-	
+
+	while(*a)
+		pa(a,b,"pb\n");
+	// tmp = *b;
+	// while(tmp)
+	// {
+	// 	printf("%d\n",tmp->pos);
+	// 	tmp = tmp->next;
+	// }
 	
 }
-
-
-
-
 
 
 
@@ -292,7 +272,6 @@ void sort_100(t_stack **a,t_stack **b ,int size)
 void sort_size(t_stack **a,t_stack **b,int i)
 {
 	t_stack *tmp;
-
 	if(i < 3)
 		sa(a , "sa \n ");
 	if(i <= 3)
@@ -303,7 +282,77 @@ void sort_size(t_stack **a,t_stack **b,int i)
 		sort_5(a,b);
 	else  if (i <= 100)
 		sort_100(a,b ,i);
+	
 	// else if (i >= 100)
 	//     sort_500();
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+// void check_size(t_stack **a,int size)
+// {
+// 	t_stack *tmp;
+// 	t_stack *tmp2;
+	
+// 	tmp = *a;
+// 	while(tmp)
+// 	{
+// 		tmp2 = *a;
+// 		while(tmp2 != tmp->next)
+// 		{
+// 			if(tmp->content >= tmp2->content)
+// 				tmp->log += 1;
+// 			tmp2 = tmp2->next;
+// 		}
+// 		tmp = tmp->next;
+// 	}	
+// }
+
+
+// void sort_100(t_stack **a,t_stack **b ,int size)
+// {
+// 	t_stack *tmp;
+	
+// 	int	i ;
+	
+// 	check_size(a , size);
+// 	*a = ft_lstlast(*a);
+// 	i = (*a)->log - 1;
+// 	while((*a)->previous)
+// 	{
+// 		tmp = *a;
+// 		while(tmp->previous)
+// 		{
+// 			if((*a)->log < tmp->log && tmp->log <= i)
+// 			{
+// 				(*a)->dis = 0;
+// 				break;
+// 			}
+// 			tmp = tmp->previous;
+// 		}
+// 		if((*a)->dis == 1)
+// 			i = (*a)->log - 1;
+// 		tmp = (*a);
+// 		while(tmp->previous)
+// 		{	
+// 			if((*a)->dis == 1 && (*a)->content < tmp->content && (*a)->log >= tmp->log )
+// 				(tmp)->dis = 0;
+// 			tmp = tmp->previous;
+// 		}
+// 		(*a) =(*a)->previous;
+// 	}
+// 	*a = ft_lstfirst(*a);
+// 	tmp = (*a);
+	
+	
+// }

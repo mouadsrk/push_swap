@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/18 06:58:08 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/18 22:37:31 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,18 +153,18 @@ int main (int argc, char **argv)
 		exit(0);
 	indice(a);
 	tmp = a;
-	// while(tmp)
-	// {
-	// 	printf("indice = %d valeur %d\n",tmp->log, tmp->content);
-	// 	tmp = tmp->next;
-	// }
-	// 	printf("\n\n");
+	while(tmp)
+	{
+		printf("pos = %d valeur %d\n",tmp->pos, tmp->content);
+		tmp = tmp->next;
+	}
+		printf("\n\n");
 	sort_size(&a,&b,ft_lstsize(a));
 	tmp = a;
 	printf("\n\n");
 	while(tmp)
 	{
-		printf("log = %d  dis = %d valeur %d\n",tmp->log,tmp->dis, tmp->content);
+		printf("pos = %d valeur %d\n",tmp->pos, tmp->content);
 		tmp = tmp->next;
 	}
 	
