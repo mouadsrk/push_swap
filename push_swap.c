@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/16 22:01:18 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/18 06:58:08 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	check_is_empty(char *str)
 }
 
 
-void check_sort(t_stack *a)
+int  check_sort(t_stack *a)
 {
 	int i;
 	
 	if(!a)
-		return;
+		return (0);
 	i = a->content;
 	while(a->next)
 	{
@@ -46,13 +46,9 @@ void check_sort(t_stack *a)
 		if(a->content > i)
 		i = a->content;
 		else
-			return;
+			return (0);
 	}
-	if(!a->next)
-	{
-		printf("it already sorted");
-		exit(0);
-	}
+	return (1);
 }
 
 void check_numbers_digit(char *num)
@@ -93,8 +89,9 @@ t_stack *make_stack(char **str)
 	a = ft_lstnew(ft_atoi(str[i]));
 	tmp = a;
 	while(str[++i])
-	{	
+	{
 		tmp->next = ft_lstnew(ft_atoi(str[i]));
+		tmp->next->previous = tmp;
 		tmp = tmp->next;
 	}
 	return(a);
@@ -152,21 +149,23 @@ int main (int argc, char **argv)
 	}
 	a = make_stack(str);
 	duplicat_number(a);
-	check_sort(a);
+	if(check_sort(a))
+		exit(0);
 	indice(a);
-	// tmp = a;
+	tmp = a;
 	// while(tmp)
 	// {
-	// 	printf("indice = %d valeur %d\n",tmp->pos, tmp->content);
+	// 	printf("indice = %d valeur %d\n",tmp->log, tmp->content);
 	// 	tmp = tmp->next;
 	// }
+	// 	printf("\n\n");
 	sort_size(&a,&b,ft_lstsize(a));
 	tmp = a;
+	printf("\n\n");
 	while(tmp)
 	{
-		printf("indice = %d valeur %d\n",tmp->pos, tmp->content);
+		printf("log = %d  dis = %d valeur %d\n",tmp->log,tmp->dis, tmp->content);
 		tmp = tmp->next;
 	}
 	
-
 }
