@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:02:58 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/18 23:03:02 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/19 07:33:16 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,22 @@
 // 	}
 // 	*a = ft_lstfirst(*a);
 // 	tmp = (*a);
+
+
+
+#include<stdio.h>
+
+int main ()
+{
+
+	int mid , chunck = 39 , size = 26;
+	
+	if(chunck <= 19)
+		mid = size / 2;
+	if(chunck > size && chunck > 19)
+		mid = ((chunck - 20) + size) / 2     ;
+	if ((chunck <= size && chunck > 19))
+		mid = chunck - 10 ;
+
+    printf("mid = %d\n",mid);
+}

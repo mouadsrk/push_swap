@@ -4,7 +4,6 @@
 #include "libft/libft.h"
 
 
-
 typedef struct stract
 {
     int     i;

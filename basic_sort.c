@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 05:28:32 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/18 23:51:44 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/19 07:54:43 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void sort_3(t_stack **a)
 	int i1;
 	int i2;
 	int i3;
-	
+
 	if(!*a)
 		return;
 	i1 = (*a)->content;
@@ -96,7 +96,7 @@ int min_pos(t_stack *a)
 {
 	t_stack *tmp;
 	int i;
-	
+
 	tmp = a;
 	i = tmp->pos;
 	while(tmp)
@@ -112,7 +112,7 @@ int max_pos(t_stack *a)
 {
 	t_stack *tmp;
 	int i;
-	
+
 	tmp = a;
 	i = tmp->pos;
 	while(tmp)
@@ -146,11 +146,11 @@ void sort_5(t_stack **a,t_stack **b)
 	{
 		if (get_pos(*a ,min_pos(*a)) >= ft_lstsize(*a) /2)
 			while((*a)->pos != min_pos(*a))
-				rra(a ,"rra \n");   
+				rra(a ,"rra \n");
 		else if (get_pos(*a ,min_pos(*a)) < ft_lstsize(*a) /2)
 			while((*a)->pos != min_pos(*a))
-				ra(a, "ra \n");   
-		if((*a)->pos == min_pos(*a)) 
+				ra(a, "ra \n");
+		if((*a)->pos == min_pos(*a))
 			pa(a,b, "pb \n");
 	}
 	sort_3(a);
@@ -165,13 +165,25 @@ void sort_5(t_stack **a,t_stack **b)
 
 // next modification
 
-int get_chunck(t_stack *a,t_data *d)
-{
-	int i;
+// void get_stack_a(t_stack *b,t_data *d)
+// {
+// 	d->holt_first = b->pos;
+// 	while(b)
+// 	{
+// 		if(b->pos >=  d->holt_first)
+// 		{
+// 			d->holt_second = d->holt_first;
+// 			d->holt_first = b->pos;
+// 		}
+// 		b = b->next;
+// 	}
+// }
 
+
+void get_chunck(t_stack *a,t_data *d)
+{
 	d->holt_first = -1;
 	d->holt_second = -1;
-	i = 0;
 	while(a)
 	{
 		if(a->pos <= d->chunck && d->holt_first == -1 )
@@ -181,50 +193,71 @@ int get_chunck(t_stack *a,t_data *d)
 		}
 		else if(a->pos <= d->chunck && d->holt_first != -1 )
 			d->holt_second = a->pos;
-		i++;
 		a = a->next;
 	}
-	return i;
+}
+
+int middle_chunk(t_data d,int size , int i)
+{
+	int mid;
+
+	if(d.chunck <= 19)
+		mid = size / 2;
+	if(d.chunck > size && d.chunck > 19)
+		mid = ((d.chunck - 20) + size) / 2     ;
+	if ((d.chunck <= size && d.chunck > 19))
+		mid = d.chunck - 10 ;
+		return mid;
 }
 
 
-int push_b(t_data *d, t_stack **a ,  t_stack **b)
+
+int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid)
 {
 	if(!*a)
-		return 1;		
-	get_chunck(*a,d);	
-		if(d->holt_second == -1 && d->holt_first == -1)
-			return 1;
+		return 1;
+	get_chunck(*a,d);
+	if(d->holt_second == -1 && d->holt_first == -1)
+		return 1;
 	d->first_move = get_pos(*a,d->holt_first);
-	d->seconde_move = ft_lstsize(*a) - get_pos(*a,d->holt_first) - 1;
-	if(d->first_move <= d->seconde_move )
+	d->seconde_move = ft_lstsize(*a) - get_pos(*a,d->holt_second) - 1;
+	if(d->first_move <= d->seconde_move)
 	{
 		while((*a)->pos != d->holt_first)
 			ra(a,"ra\n");
 			if((*a)->pos == d->holt_first)
 			{
-				printf("push pos = %d\n",(*a)->pos);
 				pa(a , b, "pb\n");
-				if((*b)->pos >= d->chunck / 2)
-					if(*b && (ft_lstsize(*b)) != 1)
+				if((*b)->pos > mid)
 						ra(b,"rb\n");
 			}
 		}
-		else
-		{
-		while((*a)->pos != d->holt_second && d->holt_second != -1)
-				rra(a,"rra\n");
-		if((*a)->pos == d->holt_second)
-		{
-			printf("push pos = %d\n",(*a)->pos);
-			pa(a , b, "pb\n");
-				if((*b)->pos >= d->chunck / 2 && (ft_lstsize(*b)) != 1)
-				{
-					ra(b,"rb\n");
-				}
-		}
-		}
-		return 0;
+	else
+	{
+	while((*a)->pos != d->holt_second && d->holt_second != -1)
+			rra(a,"rra\n");
+	if((*a)->pos == d->holt_second)
+	{
+		pa(a , b, "pb\n");
+			if((*b)->pos > mid)
+				ra(b,"rb\n");
+	}
+	}
+	return 0;
+}
+
+
+void push_a(t_data *d,t_stack **a,t_stack **b)
+{
+	int size;
+	if(!*b)
+		return ;
+	get_chunck(*b,d);
+	if(d->holt_second == -1 && d->holt_first == -1)
+		return ;
+	
+	
+		
 }
 
 
@@ -233,35 +266,32 @@ void sort_100(t_stack **a,t_stack **b ,int size)
 	t_data d;
 	t_stack *tmp;
 	int i;
-	
-	d.chunck = size / 4 - 1;
-	printf("c%d\n",d.chunck);
+	int j;
+	int m;
+
+	i = 1;
 	while(*a)
 	{
-		i = 0;
-		while(i == 0)
+		d.chunck = 20 * i;
+		j = middle_chunk(d,size,i);
+		m = 0;
+		while(!m)
 		{
-			i = push_b(&d,a,b);
-				tmp = *a;
-			// while(tmp)
-			// {
-			// 	printf("pos = %d valeur  %d\n",tmp->pos, tmp->content);
-			// 	tmp = tmp->next;
-			// }
-			printf("\n");
+			m = push_b(&d,a,b,j);
 		}
-		d.chunck += size / 5 - 1;
+		i++;
 	}
-
-	while(*a)
-		pa(a,b,"pb\n");
-	// tmp = *b;
-	// while(tmp)
-	// {
-	// 	printf("%d\n",tmp->pos);
-	// 	tmp = tmp->next;
-	// }
-	
+	while((*b))
+	{
+		if (get_pos(*b ,max_pos(*b)) >= ft_lstsize(*b) /2)
+			while((*b)->pos != max_pos(*b))
+				rra(b ,"rrb \n");
+		else if (get_pos(*b ,max_pos(*b)) < ft_lstsize(*b) /2)
+			while((*b)->pos != max_pos(*b))
+				ra(b, "rb \n");
+		if((*b)->pos == max_pos(*b))
+			pa(b,a, "pa \n");
+	}
 }
 
 
@@ -277,13 +307,13 @@ void sort_size(t_stack **a,t_stack **b,int i)
 	if(i <= 3)
 		sort_3(a);
 	else if(i <= 4)
-		sort_4(a,b);    
+		sort_4(a,b);
 	else if(i <= 5)
 		sort_5(a,b);
-	else  if (i <= 100)
+	else  if (i   <= 100)
 		sort_100(a,b ,i);
-	
-	// else if (i >= 100)
+
+	// else if (i > 100)
 	//     sort_500();
 }
 
@@ -303,7 +333,7 @@ void sort_size(t_stack **a,t_stack **b,int i)
 // {
 // 	t_stack *tmp;
 // 	t_stack *tmp2;
-	
+
 // 	tmp = *a;
 // 	while(tmp)
 // 	{
@@ -315,16 +345,16 @@ void sort_size(t_stack **a,t_stack **b,int i)
 // 			tmp2 = tmp2->next;
 // 		}
 // 		tmp = tmp->next;
-// 	}	
+// 	}
 // }
 
 
 // void sort_100(t_stack **a,t_stack **b ,int size)
 // {
 // 	t_stack *tmp;
-	
+
 // 	int	i ;
-	
+
 // 	check_size(a , size);
 // 	*a = ft_lstlast(*a);
 // 	i = (*a)->log - 1;
@@ -344,7 +374,7 @@ void sort_size(t_stack **a,t_stack **b,int i)
 // 			i = (*a)->log - 1;
 // 		tmp = (*a);
 // 		while(tmp->previous)
-// 		{	
+// 		{
 // 			if((*a)->dis == 1 && (*a)->content < tmp->content && (*a)->log >= tmp->log )
 // 				(tmp)->dis = 0;
 // 			tmp = tmp->previous;
@@ -353,6 +383,6 @@ void sort_size(t_stack **a,t_stack **b,int i)
 // 	}
 // 	*a = ft_lstfirst(*a);
 // 	tmp = (*a);
-	
-	
+
+
 // }

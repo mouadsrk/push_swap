@@ -6,11 +6,12 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/18 22:37:31 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/19 07:52:03 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "push_swap.h"
+
 
 void	check_is_empty(char *str)
 {
@@ -36,17 +37,22 @@ void	check_is_empty(char *str)
 int  check_sort(t_stack *a)
 {
 	int i;
-	
+	int j;
+	j = -1; 
 	if(!a)
 		return (0);
 	i = a->content;
 	while(a->next)
 	{
+		j++;
 		a = a->next;
 		if(a->content > i)
 		i = a->content;
 		else
+		{
+			printf("<%d>",j);
 			return (0);
+		}
 	}
 	return (1);
 }
@@ -152,20 +158,10 @@ int main (int argc, char **argv)
 	if(check_sort(a))
 		exit(0);
 	indice(a);
-	tmp = a;
-	while(tmp)
-	{
-		printf("pos = %d valeur %d\n",tmp->pos, tmp->content);
-		tmp = tmp->next;
-	}
-		printf("\n\n");
 	sort_size(&a,&b,ft_lstsize(a));
-	tmp = a;
-	printf("\n\n");
-	while(tmp)
-	{
-		printf("pos = %d valeur %d\n",tmp->pos, tmp->content);
-		tmp = tmp->next;
-	}
+	if (check_sort(a))
+		printf("\nsorted ");
+	else
+	printf("\n not sorted ");
 	
 }

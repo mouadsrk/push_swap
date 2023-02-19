@@ -1,12 +1,17 @@
 # include "push_swap.h"
 
+int num ;
+
 void sa(t_stack **a ,char *str)
 {
 	t_stack *tmp;
 
 	if(!a)
 		return;
+	num += 1;
+	printf("%d ",num);
 	write(1, str, ft_strlen(str));
+
 	tmp = *a;
 	(*a) = (*a)->next;
 	tmp->next = (*a)->next;
@@ -25,6 +30,8 @@ void pa(t_stack **a,t_stack **b ,char *str)
 
 	if(!*a)
 		return;
+	num += 1;
+	printf("%d ",num);
 	write(1, str, ft_strlen(str));
 	tmp = *a;
 	*a = tmp->next;
@@ -40,6 +47,8 @@ void ra(t_stack **a ,char *str)
 
 	if(!*a)
 		return;
+	num += 1;
+	printf("%d ",num);
 	write(1, str, ft_strlen(str));
 	tmp = *a;
 	tmp2 = *a;
@@ -63,6 +72,8 @@ void rra(t_stack **a ,char *str)
 
 	if(!*a)
 		return;
+	num += 1;
+	printf("%d ",num);
 	write(1, str, ft_strlen(str));
 	tmp = *a;
 	tmp2 = *a;
