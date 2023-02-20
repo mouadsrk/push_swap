@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/19 07:52:03 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:26:38 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int  check_sort(t_stack *a)
 		if(a->content > i)
 		i = a->content;
 		else
-		{
-			printf("<%d>",j);
 			return (0);
-		}
 	}
 	return (1);
 }
@@ -84,6 +81,7 @@ void check_numbers_digit(char *num)
 		exit(1);
 	}
 }
+
 
 t_stack *make_stack(char **str)
 {
@@ -127,6 +125,10 @@ void duplicat_number(t_stack *a)
 
 int main (int argc, char **argv)
 {
+
+	int fd = open("out.txt", O_WRONLY | O_CREAT , 0777);
+	dup2(fd,1);
+	close(fd);
 	t_data n;
 	char **str;
 	int i;
@@ -157,6 +159,7 @@ int main (int argc, char **argv)
 	duplicat_number(a);
 	if(check_sort(a))
 		exit(0);
+	tmp = a;
 	indice(a);
 	sort_size(&a,&b,ft_lstsize(a));
 	if (check_sort(a))

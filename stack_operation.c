@@ -9,8 +9,8 @@ void sa(t_stack **a ,char *str)
 	if(!a)
 		return;
 	num += 1;
-	printf("%d ",num);
-	write(1, str, ft_strlen(str));
+	// printf("%d ",num);
+	// write(1, str, ft_strlen(str));
 
 	tmp = *a;
 	(*a) = (*a)->next;
@@ -31,8 +31,8 @@ void pa(t_stack **a,t_stack **b ,char *str)
 	if(!*a)
 		return;
 	num += 1;
-	printf("%d ",num);
-	write(1, str, ft_strlen(str));
+	// printf("%d ",num);
+	// write(1, str, ft_strlen(str));
 	tmp = *a;
 	*a = tmp->next;
 	tmp->next = *b;
@@ -48,8 +48,8 @@ void ra(t_stack **a ,char *str)
 	if(!*a)
 		return;
 	num += 1;
-	printf("%d ",num);
-	write(1, str, ft_strlen(str));
+	// printf("%d ",num);
+	// write(1, str, ft_strlen(str));
 	tmp = *a;
 	tmp2 = *a;
 	*a = (*a)->next;
@@ -73,8 +73,8 @@ void rra(t_stack **a ,char *str)
 	if(!*a)
 		return;
 	num += 1;
-	printf("%d ",num);
-	write(1, str, ft_strlen(str));
+	// printf("%d ",num);
+	// write(1, str, ft_strlen(str));
 	tmp = *a;
 	tmp2 = *a;
 	while(tmp->next)

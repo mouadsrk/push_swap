@@ -28,6 +28,13 @@ void indice(t_stack *a);
 void sort_size(t_stack **a,t_stack **b,int i);
 int  check_sort(t_stack *a);
 void sort_3(t_stack **a);
+void sort_5(t_stack **a,t_stack **b);
+void sort_4(t_stack **a,t_stack **b);
+int min_pos(t_stack *a);
+int max_pos(t_stack *a);
+int get_pos(t_stack *a,int pos);
+void make_list(t_stack **a);
+
 
 #endif
 

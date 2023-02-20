@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 05:28:32 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/19 07:54:43 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:29:36 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void sort_3(t_stack **a)
 	if(i1 > i3 && i3 > i2)
 		ra(a , "ra\n");
 	if(i1 < i2 && i1> i3)
-		rra(a , "rra");
+		rra(a , "rra\n");
 }
 
 void sort_4_nor(t_stack **a,t_stack **b)
@@ -186,12 +186,12 @@ void get_chunck(t_stack *a,t_data *d)
 	d->holt_second = -1;
 	while(a)
 	{
-		if(a->pos <= d->chunck && d->holt_first == -1 )
+		if(a->dis == 0 && (a->pos <= d->chunck && d->holt_first == -1))
 		{
 			d->holt_first = a->pos;
 			d->holt_second = a->pos;
 		}
-		else if(a->pos <= d->chunck && d->holt_first != -1 )
+		else if(a->dis == 0 && (a->pos <= d->chunck && d->holt_first != -1))
 			d->holt_second = a->pos;
 		a = a->next;
 	}
@@ -255,11 +255,23 @@ void push_a(t_data *d,t_stack **a,t_stack **b)
 	get_chunck(*b,d);
 	if(d->holt_second == -1 && d->holt_first == -1)
 		return ;
-	
-	
-		
 }
 
+void a_rotating_direction(t_stack **a, t_stack **b)
+{
+	if((*b)->pos > max_pos((*a)))
+		return;
+	else if ((*b)->pos < max_pos((*a)))
+	{	
+	 	if(((*b)->pos > (*a)->pos) && ((*b)->content > ft_lstlast(*a)->content))
+			return;	
+		else if((((*b)->pos > (*a)->pos)) && ((*b)->content < ft_lstlast(*a)->content))
+		{
+				while((*b)->content < ft_lstlast(*a)->content)
+					rra(a,"rra\n");
+		}
+	}
+}
 
 void sort_100(t_stack **a,t_stack **b ,int size)
 {
@@ -268,11 +280,13 @@ void sort_100(t_stack **a,t_stack **b ,int size)
 	int i;
 	int j;
 	int m;
-
+	int max_chunk;
+	
+	make_list(a);
 	i = 1;
-	while(*a)
+	while(i < (size / 56) + 2)
 	{
-		d.chunck = 20 * i;
+		d.chunck = 56 * i;
 		j = middle_chunk(d,size,i);
 		m = 0;
 		while(!m)
@@ -281,17 +295,40 @@ void sort_100(t_stack **a,t_stack **b ,int size)
 		}
 		i++;
 	}
-	while((*b))
+
+	while((*a)->pos != min_pos(*a))
+		rra(a,"rra\n");
+	tmp = *a;
+	while(tmp)
 	{
-		if (get_pos(*b ,max_pos(*b)) >= ft_lstsize(*b) /2)
-			while((*b)->pos != max_pos(*b))
-				rra(b ,"rrb \n");
-		else if (get_pos(*b ,max_pos(*b)) < ft_lstsize(*b) /2)
-			while((*b)->pos != max_pos(*b))
-				ra(b, "rb \n");
-		if((*b)->pos == max_pos(*b))
-			pa(b,a, "pa \n");
+		printf("pos = %d\n",tmp->pos);
+		tmp = tmp->next;
 	}
+	if (check_sort(*a))
+		printf("\nsorted ");
+	else
+	printf("\n not sorted ");
+	exit(0);
+	// while((*b))
+	// {
+	// 	if (get_pos(*b ,max_pos(*b)) >= ft_lstsize(*b) /2)
+	// 	{
+	// 		while((*b)->pos != max_pos(*b))
+	// 			rra(b ,"rrb \n");
+	// 	}		
+	// 	else if (get_pos(*b ,max_pos(*b)) < ft_lstsize(*b) /2)
+	// 	{
+	// 		while((*b)->pos != max_pos(*b))
+	// 			ra(b, "rb \n");
+	// 	}
+	// 	a_rotating_direction(a,b);
+	// 	if((*b)->pos == max_pos(*b))
+	// 		pa(b,a, "pa \n");
+	// }
+	// while((*a)->pos != 0)
+	// {
+	// 	rra(a,"rra\n");
+	// }
 }
 
 
@@ -310,7 +347,7 @@ void sort_size(t_stack **a,t_stack **b,int i)
 		sort_4(a,b);
 	else if(i <= 5)
 		sort_5(a,b);
-	else  if (i   <= 100)
+	else  if (i   > 5)
 		sort_100(a,b ,i);
 
 	// else if (i > 100)
