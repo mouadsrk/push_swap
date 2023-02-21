@@ -1,6 +1,5 @@
 # include "push_swap.h"
 
-int num ;
 
 void sa(t_stack **a ,char *str)
 {
@@ -8,9 +7,8 @@ void sa(t_stack **a ,char *str)
 
 	if(!a)
 		return;
-	num += 1;
-	// printf("%d ",num);
-	// write(1, str, ft_strlen(str));
+
+	write(1, str, ft_strlen(str));
 
 	tmp = *a;
 	(*a) = (*a)->next;
@@ -20,8 +18,8 @@ void sa(t_stack **a ,char *str)
 
 void ss(t_stack **a,t_stack **b)
 {
-	sa(a , "sa \n");
-	sa(b, "sb \n");
+	sa(a , "sa\n");
+	sa(b, "sb\n");
 }
 
 void pa(t_stack **a,t_stack **b ,char *str)
@@ -30,9 +28,8 @@ void pa(t_stack **a,t_stack **b ,char *str)
 
 	if(!*a)
 		return;
-	num += 1;
-	// printf("%d ",num);
-	// write(1, str, ft_strlen(str));
+
+	write(1, str, ft_strlen(str));
 	tmp = *a;
 	*a = tmp->next;
 	tmp->next = *b;
@@ -47,9 +44,8 @@ void ra(t_stack **a ,char *str)
 
 	if(!*a)
 		return;
-	num += 1;
-	// printf("%d ",num);
-	// write(1, str, ft_strlen(str));
+
+	write(1, str, ft_strlen(str));
 	tmp = *a;
 	tmp2 = *a;
 	*a = (*a)->next;
@@ -61,8 +57,8 @@ void ra(t_stack **a ,char *str)
 
 void rr(t_stack **a,t_stack **b)
 {
-	ra(a ,"ra \n");
-	ra(b ,"rb \n");
+	ra(a ,"ra\n");
+	ra(b ,"rb\n");
 }
 
 void rra(t_stack **a ,char *str)
@@ -72,9 +68,8 @@ void rra(t_stack **a ,char *str)
 
 	if(!*a)
 		return;
-	num += 1;
-	// printf("%d ",num);
-	// write(1, str, ft_strlen(str));
+
+	write(1, str, ft_strlen(str));
 	tmp = *a;
 	tmp2 = *a;
 	while(tmp->next)
@@ -88,7 +83,6 @@ void rra(t_stack **a ,char *str)
 
 void rrr(t_stack **a,t_stack **b)
 {
-	rra(a, "rra \n");
-	rra(b, "rrb \n");
+	rra(a, "rra\n");
+	rra(b, "rrb\n");
 }
-

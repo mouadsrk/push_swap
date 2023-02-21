@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 05:28:32 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/20 16:29:36 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/21 04:36:47 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void sort_3(t_stack **a)
 	i2 = (*a)->next->content;
 	i3 = (*a)->next->next->content;
 	if((i1 > i2 && i1 < i3) || (i1 > i2 && i2 > i3) || (i1 < i3 && i3 < i2))
-		sa(a ,"sa \n");
+		sa(a ,"sa\n");
 	i1 = (*a)->content;
 	i2 = (*a)->next->content;
 	i3 = (*a)->next->next->content;
@@ -48,18 +48,18 @@ void sort_4_nor(t_stack **a,t_stack **b)
 	i4 = (*a)->next->next->next->pos;
 	if(i3 == 0)
 	{
-		ra(a ,"ra \n");
-		ra(a , "ra \n");
+		ra(a ,"ra\n");
+		ra(a , "ra\n");
 		pa(a,b , "pb\n");
 		sort_3(a);
-		pa(b,a,"pa \n");
+		pa(b,a,"pa\n");
 	}
 	else if(i4 == 0)
 	{
-		rra(a, "rra \n");
+		rra(a, "rra\n");
 		pa(a,b , "pb\n");
 		sort_3(a);
-		pa(b,a ,"pa \n");
+		pa(b,a ,"pa\n");
 	}
 }
 
@@ -77,16 +77,16 @@ void sort_4(t_stack **a,t_stack **b)
 	i4 = (*a)->next->next->next->pos;
 	if(i1 == 0)
 	{
-		pa(a,b , "pb \n");
+		pa(a,b , "pb\n");
 		sort_3(a);
-		pa(b,a, "pa \n");
+		pa(b,a, "pa\n");
 	}
 	else if(i2 == 0)
 	{
 		sa(a, "sa\n");
-		pa(a,b , "pb \n");
+		pa(a,b , "pb\n");
 		sort_3(a);
-		pa(b,a ,"pa \n");
+		pa(b,a ,"pa\n");
 	}
 	else
 	sort_4_nor(a,b);
@@ -146,38 +146,17 @@ void sort_5(t_stack **a,t_stack **b)
 	{
 		if (get_pos(*a ,min_pos(*a)) >= ft_lstsize(*a) /2)
 			while((*a)->pos != min_pos(*a))
-				rra(a ,"rra \n");
+				rra(a ,"rra\n");
 		else if (get_pos(*a ,min_pos(*a)) < ft_lstsize(*a) /2)
 			while((*a)->pos != min_pos(*a))
-				ra(a, "ra \n");
+				ra(a, "ra\n");
 		if((*a)->pos == min_pos(*a))
-			pa(a,b, "pb \n");
+			pa(a,b, "pb\n");
 	}
 	sort_3(a);
 	while(*b)
-		pa(b,a , "pa \n");
+		pa(b,a , "pa\n");
 }
-
-
-
-
-
-
-// next modification
-
-// void get_stack_a(t_stack *b,t_data *d)
-// {
-// 	d->holt_first = b->pos;
-// 	while(b)
-// 	{
-// 		if(b->pos >=  d->holt_first)
-// 		{
-// 			d->holt_second = d->holt_first;
-// 			d->holt_first = b->pos;
-// 		}
-// 		b = b->next;
-// 	}
-// }
 
 
 void get_chunck(t_stack *a,t_data *d)
@@ -186,18 +165,18 @@ void get_chunck(t_stack *a,t_data *d)
 	d->holt_second = -1;
 	while(a)
 	{
-		if(a->dis == 0 && (a->pos <= d->chunck && d->holt_first == -1))
+		if((a->pos <= d->chunck && d->holt_first == -1))
 		{
 			d->holt_first = a->pos;
 			d->holt_second = a->pos;
 		}
-		else if(a->dis == 0 && (a->pos <= d->chunck && d->holt_first != -1))
+		else if((a->pos <= d->chunck && d->holt_first != -1))
 			d->holt_second = a->pos;
 		a = a->next;
 	}
 }
 
-int middle_chunk(t_data d,int size , int i)
+int middle_chunk(t_data d,int size)
 {
 	int mid;
 
@@ -228,7 +207,7 @@ int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid)
 			if((*a)->pos == d->holt_first)
 			{
 				pa(a , b, "pb\n");
-				if((*b)->pos > mid)
+				if((*b)->pos < mid)
 						ra(b,"rb\n");
 			}
 		}
@@ -238,11 +217,16 @@ int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid)
 			rra(a,"rra\n");
 	if((*a)->pos == d->holt_second)
 	{
+		// printf("%d\n",(*a)->pos);
 		pa(a , b, "pb\n");
-			if((*b)->pos > mid)
+			if((*b)->pos < mid)
 				ra(b,"rb\n");
 	}
 	}
+	// if((*b) && (*b)->pos== 59)
+	// {
+	// 	printf("<%d>\n",mid);
+	// }
 	return 0;
 }
 
@@ -257,78 +241,79 @@ void push_a(t_data *d,t_stack **a,t_stack **b)
 		return ;
 }
 
-void a_rotating_direction(t_stack **a, t_stack **b)
-{
-	if((*b)->pos > max_pos((*a)))
-		return;
-	else if ((*b)->pos < max_pos((*a)))
-	{	
-	 	if(((*b)->pos > (*a)->pos) && ((*b)->content > ft_lstlast(*a)->content))
-			return;	
-		else if((((*b)->pos > (*a)->pos)) && ((*b)->content < ft_lstlast(*a)->content))
-		{
-				while((*b)->content < ft_lstlast(*a)->content)
-					rra(a,"rra\n");
-		}
-	}
-}
 
-void sort_100(t_stack **a,t_stack **b ,int size)
+// int ft_chunk_range(t_stack *a,int i)
+// {
+
+	
+// 	if(ft_lstsize(a) <= 100)
+// 	{
+// 		return (i * 20);
+// 	}
+	// if(ft_lstsize(a) >= 100)
+	// {
+	// 	return (i * 25);
+	// }
+	// if(ft_lstsize(a) >= 170)
+	// {
+	// 	return (i * 40);
+	// }
+// 	if(ft_lstsize(a) <= 250)
+// 	{
+// 		return (i * 40);
+// 	}
+	
+// 	if(ft_lstsize(a) >= 300)
+// 	{
+// 		return (i * 56);
+		
+// 	}
+// 	return (56 * i);
+// }
+
+void sort_100(t_stack **a,t_stack **b, int i)
 {
 	t_data d;
-	t_stack *tmp;
-	int i;
+	int num;
 	int j;
 	int m;
-	int max_chunk;
-	
-	make_list(a);
-	i = 1;
-	while(i < (size / 56) + 2)
+	int l;
+	int tmp;
+	d.chunck = 0;
+	j = 1;
+	num = i  / 11 +  i % 11 - 1 ;
+	if(ft_lstsize(*a) <= 100)
+			num = i  / 4 +  i % 4 - 1 ;
+	while(*a)
 	{
-		d.chunck = 56 * i;
-		j = middle_chunk(d,size,i);
+		tmp = d.chunck;
+		d.chunck = d.chunck + num;
 		m = 0;
 		while(!m)
 		{
-			m = push_b(&d,a,b,j);
+			m = push_b(&d,a,b,tmp + num / 2);
 		}
-		i++;
+		j++;
 	}
-
-	while((*a)->pos != min_pos(*a))
-		rra(a,"rra\n");
-	tmp = *a;
-	while(tmp)
+	
+	while((*b))
 	{
-		printf("pos = %d\n",tmp->pos);
-		tmp = tmp->next;
+		if (get_pos(*b ,max_pos(*b)) >= ft_lstsize(*b) /2)
+		{
+			while((*b)->pos != max_pos(*b))
+				rra(b ,"rrb\n");
+		}		
+		else if (get_pos(*b ,max_pos(*b)) < ft_lstsize(*b) /2)
+		{
+			while((*b)->pos != max_pos(*b))
+				ra(b, "rb\n");
+		}
+		if((*b)->pos == max_pos(*b))
+		{
+			// printf("%d\n",(*b)->pos);
+			pa(b,a, "pa\n");
+		}
 	}
-	if (check_sort(*a))
-		printf("\nsorted ");
-	else
-	printf("\n not sorted ");
-	exit(0);
-	// while((*b))
-	// {
-	// 	if (get_pos(*b ,max_pos(*b)) >= ft_lstsize(*b) /2)
-	// 	{
-	// 		while((*b)->pos != max_pos(*b))
-	// 			rra(b ,"rrb \n");
-	// 	}		
-	// 	else if (get_pos(*b ,max_pos(*b)) < ft_lstsize(*b) /2)
-	// 	{
-	// 		while((*b)->pos != max_pos(*b))
-	// 			ra(b, "rb \n");
-	// 	}
-	// 	a_rotating_direction(a,b);
-	// 	if((*b)->pos == max_pos(*b))
-	// 		pa(b,a, "pa \n");
-	// }
-	// while((*a)->pos != 0)
-	// {
-	// 	rra(a,"rra\n");
-	// }
 }
 
 
@@ -340,18 +325,17 @@ void sort_size(t_stack **a,t_stack **b,int i)
 {
 	t_stack *tmp;
 	if(i < 3)
-		sa(a , "sa \n ");
+		sa(a , "sa\n ");
 	if(i <= 3)
 		sort_3(a);
 	else if(i <= 4)
 		sort_4(a,b);
 	else if(i <= 5)
 		sort_5(a,b);
-	else  if (i   > 5)
+	else  if (i   <= 100)
 		sort_100(a,b ,i);
-
-	// else if (i > 100)
-	//     sort_500();
+	else  if (i   > 100)
+		sort_100(a,b ,i);
 }
 
 

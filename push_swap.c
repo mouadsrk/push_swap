@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/20 16:26:38 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/21 02:38:11 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int  check_sort(t_stack *a)
 		if(a->content > i)
 		i = a->content;
 		else
+		{
+			// printf("<%d>",j);
 			return (0);
+		}
 	}
 	return (1);
 }
@@ -125,8 +128,7 @@ void duplicat_number(t_stack *a)
 
 int main (int argc, char **argv)
 {
-
-	int fd = open("out.txt", O_WRONLY | O_CREAT , 0777);
+	int fd = open("out.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	dup2(fd,1);
 	close(fd);
 	t_data n;
@@ -157,14 +159,14 @@ int main (int argc, char **argv)
 	}
 	a = make_stack(str);
 	duplicat_number(a);
-	if(check_sort(a))
-		exit(0);
-	tmp = a;
+	// if(check_sort(a))
+	// 	exit(0);
 	indice(a);
 	sort_size(&a,&b,ft_lstsize(a));
 	if (check_sort(a))
 		printf("\nsorted ");
 	else
 	printf("\n not sorted ");
+	// make_list(&a);
 	
 }
