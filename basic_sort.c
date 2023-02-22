@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 05:28:32 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/22 06:58:14 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/22 09:35:48 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ int middle_chunk(t_data d,int size)
 
 
 
-int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid)
+int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid, int l)
 {
 	if(!*a)
 		return 1;
@@ -217,7 +217,7 @@ int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid)
 		if((*a)->pos == d->holt_first)
 			{
 				pa(a , b, "pb\n");
-				if((*b)->pos <= mid && ft_lstsize(*b) > 2)
+				if((*b)->pos <= mid && ft_lstsize(*b) > 2 && l != 1)
 						ra(b,"rb\n");
 			}
 		}
@@ -228,7 +228,7 @@ int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid)
 	if((*a)->pos == d->holt_second)
 	{
 		pa(a , b, "pb\n");
-			if((*b)->pos <= mid && ft_lstsize(*b) > 2)
+			if((*b)->pos <= mid && ft_lstsize(*b) > 2 && l != 1)
 				ra(b,"rb\n");
 	}
 	}
@@ -283,7 +283,7 @@ void check_top(t_data *d,t_stack **a,t_stack **b)
 		}
 		if((*b)->pos == d->holt_first)
 			pa(b,a,"pa\n");
-			sa(a,"satop\n");
+			sa(a,"sa\n");
 	}
 }
 
@@ -298,7 +298,7 @@ void check_down(t_data *d,t_stack **a,t_stack **b)
 					pa(b,a,"pa\n");
 				if((*b)->pos == d->holt_second)
 					break;
-				rra(b,"rrbdown\n");
+				rra(b,"rrb\n");
 			}
 			if((*b)->pos == d->holt_second)
 				pa(b,a,"pa\n");
@@ -308,14 +308,14 @@ void check_down(t_data *d,t_stack **a,t_stack **b)
 		while ((*b)->pos != d->holt_first)
 		{
 			if((*b)->pos == d->holt_second)
-					pa(b,a,"pa3\n");
+					pa(b,a,"pa\n");
 			if((*b)->pos == d->holt_first)
 				break;
-			rra(b,"rrbdown2\n");
+			rra(b,"rrb\n");
 		}
 		if((*b)->pos == d->holt_first)
-				pa(b,a,"pa4\n");
-			sa(a,"sadown\n");
+				pa(b,a,"pa\n");
+			sa(a,"sa\n");
 	}
 }
 
@@ -329,21 +329,21 @@ void check_diver1(t_data *d,t_stack **a,t_stack **b)
 		if((*b)->pos == d->holt_first)
 			pa(b,a,"pa\n");
 		while ((*b)->pos != d->holt_second)
-			rra(b,"rrbd1\n");
+			rra(b,"rrb\n");
 		if((*b)->pos == d->holt_second)
 			pa(b,a,"pa\n");
 	}
 	else if (d->first_move > ft_lstsize(*b) - d->seconde_move + 2)
 	{
 		while ((*b)->pos != d->holt_second)
-			rra(b,"rrbd11\n");
+			rra(b,"rrb\n");
 		if((*b)->pos == d->holt_second)
 			pa(b,a,"pa\n");
 		while ((*b)->pos != d->holt_first)
 			ra(b,"rb\n");
 		if((*b)->pos == d->holt_first)
 				pa(b,a,"pa\n");
-			sa(a,"sad1\n");
+			sa(a,"sa\n");
 	}
 }
 
@@ -357,16 +357,16 @@ void check_diver2(t_data *d,t_stack **a,t_stack **b)
 		if((*b)->pos == d->holt_second)
 			pa(b,a,"pa1\n");
 		while ((*b)->pos != d->holt_first)
-			rra(b,"rrbd21\n");
+			rra(b,"rrb\n");
 		if((*b)->pos == d->holt_first)
-				pa(b,a,"pa2\n");
+				pa(b,a,"pa\n");
 		if(d->holt_second != d->holt_first)
-				sa(a,"sad21\n");
+				sa(a,"sa\n");
 	}
 	else if(d->seconde_move > ft_lstsize(*b) - d->first_move + 2)
 	{
 		while((*b)->pos != d->holt_first)
-			rra(b,"rrbd22\n");
+			rra(b,"rrb\n");
 		if((*b)->pos == d->holt_first)
 			pa(b,a,"pa\n");
 		while ((*b)->pos != d->holt_second)
@@ -383,25 +383,30 @@ void push_a(t_data *d,t_stack **a,t_stack **b)
 	if(!*b)
 		return ;
 	get_stak_a(*b,d);
-	// printf("%d\n",d->holt_first );
-	// printf("%d\n",d->holt_second );
+	// printf(">%d\n",d->holt_first );
+	// printf(">>%d\n",d->holt_second );
 	if(d->holt_second == -1 && d->holt_first == -1)
 		return ;
 	if(d->holt_second == d->holt_first)
 	{
-		pa(b,a,"pa13\n");
+		pa(b,a,"pa\n");
 		return ;	
 	}
 	d->first_move = get_pos(*b,d->holt_first);
 	d->seconde_move = get_pos(*b,d->holt_second);
 	size = ft_lstsize(*b);
+    // if(d->holt_first == 13)
+    // {
+    //     printf("%d\n",d->first_move );
+    //      printf("%d\n",d->seconde_move );
+    // }
 	if (d->first_move <= size /2 && d->seconde_move <= size /2)
 		check_top(d,a,b);
-	else if (d->first_move > size /2 && d->seconde_move > size /2)
+	else if (d->first_move >= size /2 && d->seconde_move >= size /2)
 		check_down(d,a,b);
-	else if(d->first_move <= size /2 && d->seconde_move > size /2)
+	else if(d->first_move <= size /2 && d->seconde_move >= size /2)
 		check_diver1(d,a,b);
-	else if(d->first_move >= size /2 && d->seconde_move < size /2)
+	else if(d->first_move >= size /2 && d->seconde_move <= size /2)
 		check_diver2(d,a,b);
 }
 
@@ -413,17 +418,22 @@ void sort_100(t_stack **a,t_stack **b, int i)
 	int num;
 	int j;
 	int m;
-	int l;
+	int l = 0;
 	int tmp;
 	t_stack *tmp1;
 	d.chunck = -1;
 	j = 1;
-	num = i  / 11 +  i % 11  ;
+	num = i  / 9 +  i % 9  ;
 	if(ft_lstsize(*a) <= 100)
-			num = i  / 5 +  i % 5  ;
+			num = i  / 4 +  i % 4  ;
 	while(*a)
 	{
 		tmp = d.chunck;
+		if(ft_lstsize(*a) <= 100)
+		{
+			// l = 1;
+			num = i  / 12 +  i % 12 ;
+		}
 		d.chunck = d.chunck + num;
 		m = 0;
 		// printf("-------------");
@@ -432,26 +442,28 @@ void sort_100(t_stack **a,t_stack **b, int i)
 			// printf(">>>>>>>>>>>\n");
 			// printf("chunck = %d\n", d.chunck);
 			// printf("mide = %d\n",tmp + num / 2);
-			m = push_b(&d,a,b,tmp + num / 2);
+			m = push_b(&d,a,b,tmp + num / 2,l);
 			// printf(">>>>>>>>>>>\n");
 		}
 		j++;
 	}
 	// 
-	while(tmp1)
-	{
-		printf("<%d>\n",tmp1->pos);
-		tmp1= tmp1->next;
-	}
+	// while(tmp1)
+	// {
+	// 	printf("<%d>\n",tmp1->pos);
+	// 	tmp1= tmp1->next;
+	// }
 
-	
+	int k = 0;
 	while((*b) != NULL)
 	{
+        
 		push_a(&d,a,b);
-
+    // if (k == 486)
+    //     break;
 	}
-	printf("size b = %d",ft_lstsize(*b));
-	printf("size a= %d",ft_lstsize(*a));
+	// printf("size b = %d",ft_lstsize(*b));
+	// printf("size a= %d",ft_lstsize(*a));
 }
 
 
