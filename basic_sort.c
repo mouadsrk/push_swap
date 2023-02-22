@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 05:28:32 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/21 04:36:47 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/22 04:18:56 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,20 +193,36 @@ int middle_chunk(t_data d,int size)
 
 int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid)
 {
+	t_stack *tmp;
 	if(!*a)
 		return 1;
 	get_chunck(*a,d);
+	printf("%d\n",d->holt_first);
+	printf("%d\n",d->holt_second);
 	if(d->holt_second == -1 && d->holt_first == -1)
 		return 1;
 	d->first_move = get_pos(*a,d->holt_first);
 	d->seconde_move = ft_lstsize(*a) - get_pos(*a,d->holt_second) - 1;
+	if(d->holt_first == 0)
 	if(d->first_move <= d->seconde_move)
 	{
 		while((*a)->pos != d->holt_first)
 			ra(a,"ra\n");
 			if((*a)->pos == d->holt_first)
 			{
-				pa(a , b, "pb\n");
+				if((*a)->pos == 2)
+				{
+					pa(a , b, "pb\n");
+					printf("OOOOOOOOOOOOOOOOOOOOO\n");
+					tmp = (*b);
+					while(tmp)
+					{
+						printf("<b0 = %d>\n",tmp->pos);
+						tmp = tmp->next;
+					}
+				}
+				else
+					pa(a , b, "pb\n");	
 				if((*b)->pos < mid)
 						ra(b,"rb\n");
 			}
@@ -223,9 +239,10 @@ int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid)
 				ra(b,"rb\n");
 	}
 	}
-	// if((*b) && (*b)->pos== 59)
+	
+	// if(*b &&(*b)->pos== 2)
 	// {
-	// 	printf("<%d>\n",mid);
+	// 	printf(">>>>>>>>>>>>>>>>>>>>>>>\n");
 	// }
 	return 0;
 }

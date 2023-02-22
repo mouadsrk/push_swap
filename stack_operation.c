@@ -30,10 +30,21 @@ void pa(t_stack **a,t_stack **b ,char *str)
 		return;
 
 	write(1, str, ft_strlen(str));
+	// if((*a)->pos == 2)
+	// {
+	// 	printf("ffff>\n");
+	// 	if(!*b)
+	// 		printf("mmm\n");
+
+	// }
 	tmp = *a;
 	*a = tmp->next;
 	tmp->next = *b;
-	*b = tmp; 
+	*b = tmp;
+	// if((*b)->pos == 2)
+	// {
+	// 	printf("bbb>>\n");
+	// } 
 }
 
 
