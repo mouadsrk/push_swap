@@ -6,7 +6,11 @@ void sa(t_stack **a ,char *str)
 	t_stack *tmp;
 
 	if(!a)
+	{
+		printf("erro\n");
 		return;
+	}
+		
 
 	write(1, str, ft_strlen(str));
 
@@ -27,24 +31,16 @@ void pa(t_stack **a,t_stack **b ,char *str)
 	t_stack *tmp;
 
 	if(!*a)
+	{
+		printf("erro\n");
 		return;
+	}
 
 	write(1, str, ft_strlen(str));
-	// if((*a)->pos == 2)
-	// {
-	// 	printf("ffff>\n");
-	// 	if(!*b)
-	// 		printf("mmm\n");
-
-	// }
 	tmp = *a;
 	*a = tmp->next;
 	tmp->next = *b;
-	*b = tmp;
-	// if((*b)->pos == 2)
-	// {
-	// 	printf("bbb>>\n");
-	// } 
+	*b = tmp; 
 }
 
 
@@ -54,8 +50,10 @@ void ra(t_stack **a ,char *str)
 	t_stack *tmp2;
 
 	if(!*a)
+	{
+		printf("erro\n");
 		return;
-
+	}
 	write(1, str, ft_strlen(str));
 	tmp = *a;
 	tmp2 = *a;
@@ -78,7 +76,10 @@ void rra(t_stack **a ,char *str)
 	t_stack *tmp2;
 
 	if(!*a)
+	{
+		printf("erro\n");
 		return;
+	}
 
 	write(1, str, ft_strlen(str));
 	tmp = *a;

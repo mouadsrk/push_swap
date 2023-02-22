@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/21 02:38:11 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/22 03:05:51 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,11 +162,24 @@ int main (int argc, char **argv)
 	// if(check_sort(a))
 	// 	exit(0);
 	indice(a);
+	// tmp = a;
+	// while (tmp)
+	// {
+	// 	printf("%d\n",tmp->pos);
+	// 	tmp =tmp->next;
+	// }
+	
 	sort_size(&a,&b,ft_lstsize(a));
 	if (check_sort(a))
 		printf("\nsorted ");
 	else
 	printf("\n not sorted ");
 	// make_list(&a);
+	// while (tmp)
+	// {
+	// 	printf("%d\n",tmp->pos);
+	// 	tmp =tmp->next;
+	// }
+	
 	
 }
