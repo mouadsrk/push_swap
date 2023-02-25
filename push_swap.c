@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/22 03:05:51 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/25 01:39:18 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int  check_sort(t_stack *a)
 		if(a->content > i)
 		i = a->content;
 		else
-		{
-			// printf("<%d>",j);
 			return (0);
-		}
 	}
 	return (1);
 }
@@ -125,20 +122,23 @@ void duplicat_number(t_stack *a)
 		tmp=tmp->next;
 	}
 }
-
+// void	ff()
+// {
+// 	system("leaks push_swap");
+// }
 int main (int argc, char **argv)
 {
-	int fd = open("out.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	dup2(fd,1);
-	close(fd);
+	// atexit(ff);
+	// int fd = open("out.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	// dup2(fd,1);
+	// close(fd);
 	t_data n;
 	char **str;
 	int i;
-	int j;
-	int w;
-	t_stack *a ,*tmp,*b;
+	t_stack *a ,*b;
 	b = NULL;
-	if(argc == 1)
+	
+		if(argc == 1)
 	{
 		printf("Error arg!\n");
 		exit(1);
@@ -147,39 +147,23 @@ int main (int argc, char **argv)
 	while(i < argc)
 	{
 		check_is_empty(argv[i]);
-		n.num = ft_strjoin(n.num,argv[i]);
+		n.str = ft_strjoin(n.str,argv[i]);
 		i++;
 	}
-	str = ft_split(n.num,' ');
-	free(n.num);
+	str = ft_split(n.str,' ');
 	i = -1;
 	while (str[++i])
-	{
 		check_numbers_digit(str[i]);
-	}
 	a = make_stack(str);
+	ft_free(str,ft_word(n.str,' '));
+	free(n.str);
 	duplicat_number(a);
-	// if(check_sort(a))
-	// 	exit(0);
 	indice(a);
-	// tmp = a;
-	// while (tmp)
-	// {
-	// 	printf("%d\n",tmp->pos);
-	// 	tmp =tmp->next;
-	// }
-	
 	sort_size(&a,&b,ft_lstsize(a));
-	if (check_sort(a))
-		printf("\nsorted ");
-	else
-	printf("\n not sorted ");
-	// make_list(&a);
-	// while (tmp)
-	// {
-	// 	printf("%d\n",tmp->pos);
-	// 	tmp =tmp->next;
-	// }
-	
+	// if(check_sort(a) == 1)
+	// 	printf("sorted");
+	// else
+	// 	printf("no sorted");
+	ft_lstclear(&a);
 	
 }

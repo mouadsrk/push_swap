@@ -44,7 +44,7 @@ void pa(t_stack **a,t_stack **b ,char *str)
 }
 
 
-void ra(t_stack **a ,char *str)
+void ra(t_stack **a ,char *str,int i)
 {
 	t_stack *tmp;
 	t_stack *tmp2;
@@ -54,6 +54,7 @@ void ra(t_stack **a ,char *str)
 		printf("erro\n");
 		return;
 	}
+	if(i == 1)
 	write(1, str, ft_strlen(str));
 	tmp = *a;
 	tmp2 = *a;
@@ -64,10 +65,12 @@ void ra(t_stack **a ,char *str)
 	tmp2->next = NULL;
 }
 
-void rr(t_stack **a,t_stack **b)
+void rr(t_stack **a,t_stack **b ,int i)
 {
-	ra(a ,"ra\n");
-	ra(b ,"rb\n");
+	if(i == 0)
+	write(1,"rr\n",3);
+	ra(a ,"ra\n",0);
+	ra(b ,"rb\n",0);
 }
 
 void rra(t_stack **a ,char *str)

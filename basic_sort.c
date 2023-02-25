@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 05:28:32 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/22 09:35:48 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/25 02:20:28 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void sort_3(t_stack **a)
 	i2 = (*a)->next->content;
 	i3 = (*a)->next->next->content;
 	if(i1 > i3 && i3 > i2)
-		ra(a , "ra\n");
+		ra(a ,"ra\n",1);
 	if(i1 < i2 && i1> i3)
 		rra(a , "rra\n");
 }
@@ -48,8 +48,8 @@ void sort_4_nor(t_stack **a,t_stack **b)
 	i4 = (*a)->next->next->next->pos;
 	if(i3 == 0)
 	{
-		ra(a ,"ra\n");
-		ra(a , "ra\n");
+		ra(a ,"ra\n",1);
+		ra(a , "ra\n",1);
 		pa(a,b , "pb\n");
 		sort_3(a);
 		pa(b,a,"pa\n");
@@ -149,7 +149,7 @@ void sort_5(t_stack **a,t_stack **b)
 				rra(a ,"rra\n");
 		else if (get_pos(*a ,min_pos(*a)) < ft_lstsize(*a) /2)
 			while((*a)->pos != min_pos(*a))
-				ra(a, "ra\n");
+				ra(a,"ra\n",1);
 		if((*a)->pos == min_pos(*a))
 			pa(a,b, "pb\n");
 	}
@@ -176,62 +176,118 @@ void get_chunck(t_stack *a,t_data *d)
 	}
 }
 
-int middle_chunk(t_data d,int size)
-{
-	int mid;
-
-	if(d.chunck <= 19)
-		mid = size / 2;
-	if(d.chunck > size && d.chunck > 19)
-		mid = ((d.chunck - 20) + size) / 2     ;
-	if ((d.chunck <= size && d.chunck > 19))
-		mid = d.chunck - 10 ;
-		return mid;
-}
 
 
-
-int push_b(t_data *d, t_stack **a ,  t_stack **b , int mid, int l)
+int push_b_data(t_data *d, t_stack **a ,  t_stack **b)
 {
 	if(!*a)
 		return 1;
 	get_chunck(*a,d);
-	// printf("%d>\n",d->holt_first);
-	// printf("%d>\n",d->holt_second);
 	if(d->holt_second == -1 && d->holt_first == -1)
-	{
-		// printf("%d>\n",d->holt_first);
-		// printf("%d>\n",d->holt_second);
 		return 1;
-	}
 	d->first_move = get_pos(*a,d->holt_first);
-	d->seconde_move = ft_lstsize(*a) - get_pos(*a,d->holt_second) + 1 ;
-	// printf("%d>\n",d->holt_first);
-	// printf("%d>\n",d->holt_second);
-	// printf("1m%d\n",d->first_move);
-	// printf("2m%d\n",d->seconde_move);
-	if(d->first_move <= d->seconde_move)
+	d->seconde_move = ft_lstsize(*a) - get_pos(*a,d->holt_second) + 1;
+	return 0;
+}
+
+void calcule_chunk_and_middle(t_data *d ,t_stack **a ,t_stack **b , int i)
+{
+	d->tmp = d->chunck;
+    if(ft_lstsize(*a) <= 100)
+		d->num = i  / 40 +  i %  40;
+    if(ft_lstsize(*a) <= 250 && ft_lstsize(*a) >= 100)
+		d->num = i  / 15 +  i % 15;
+	d->chunck = d->chunck + d->num;
+	d->mid = d->tmp + d->num / 2;
+}
+
+
+int  middle(t_data d ,t_stack **a ,t_stack **b , int i)
+{
+	d.tmp = d.chunck;
+    if(ft_lstsize(*a) <= 100)
+		d.num = i  / 40 +  i %  40;
+    else if(ft_lstsize(*a) <= 250 && ft_lstsize(*a) >= 100)
+		d.num = i  / 15 +  i % 15;
+	d.chunck = d.chunck + d.num;
+	return (d.tmp + d.num / 2);
+}
+
+// new
+int push_b(t_data *d, t_stack **a ,  t_stack **b , int i)
+{
+	int m ;
+
+	m = push_b_data(d,a,b);
+	if(m == 1)
+		return 1;
+	// printf(">>>>>>>>>>\n");
+	// printf("chunk = %d\n",d->chunck);
+	// printf("mid = %d\n",d->mid);
+	// printf("first = %d\n",d->holt_first);
+	// printf("second = %d\n",d->holt_second);
+	// printf("first move = %d\n",d->first_move);
+	// printf("second move = %d\n",d->seconde_move);
+	// printf("a = %d\n",(*a)->pos);
+	while((*a)->pos != d->holt_first && (d->holt_first != d->holt_second || d->first_move <= d->seconde_move))
 	{
-		while((*a)->pos != d->holt_first)
-			ra(a,"ra\n");
-		if((*a)->pos == d->holt_first)
+				ra(a,"ra\n",1);
+	}
+	while((*a)->pos != d->holt_second && (d->holt_first == d->holt_second  && d->first_move > d->seconde_move))
+				rra(a,"rra\n");
+	if((*a)->pos == d->holt_first || (*a)->pos == d->holt_second)
+	{
+		// printf("pa = %d\n",(*a)->pos);
+		pa(a , b, "pb\n");
+	}
+	if (push_b_data(d,a,b) == 0 && (*b)->pos <= d->mid && ft_lstsize(*b) > 2 && (*a)->pos != d->holt_first)
+	{
+		// printf("2 first = %d\n",d->holt_first);
+		// printf("2 second = %d\n",d->holt_second);
+		// printf("2 first move = %d\n",d->first_move);
+		// printf("2 second move = %d\n",d->seconde_move);
+		// printf("b = %d\n",(*b)->pos);
+		if(d->holt_first != d->holt_second)
+		{
+			// printf("rr\n");
+			rr(a,b,0);
+		}
+		else if(d->first_move < d->seconde_move && d->holt_first == d->holt_second)
+		{
+			// printf("rr\n");
+			rr(a,b,0);
+		}
+		else if(d->first_move > d->seconde_move && d->holt_first == d->holt_second)
+		{
+			// printf("rb\n");
+			ra(b,"rb\n",1);
+		}
+	}
+	else if(*a == NULL)
+			return 1;	
+	else if ((*b)->pos <= d->mid && ft_lstsize(*b) > 2 && (*a)->pos != d->holt_first)
+	{
+		if((*b)->pos <= middle(*d,a ,b ,i) )
+		{
+		// printf("2 first = %d\n",d->holt_first);
+		// printf("2 second = %d\n",d->holt_second);
+		// printf("2 first move = %d\n",d->first_move);
+		// printf("2 second move = %d\n",d->seconde_move);
+		// printf("next mide = %d\n",middle(*d,a ,b ,i));
+		// printf("b = %d\n",(*b)->pos);
+			if(d->first_move <= d->seconde_move)
 			{
-				pa(a , b, "pb\n");
-				if((*b)->pos <= mid && ft_lstsize(*b) > 2 && l != 1)
-						ra(b,"rb\n");
+				// printf("rr\n");
+					rr(a,b,0);
+			}
+			else if(d->first_move > d->seconde_move)
+			{
+				// printf("rb\n");
+				ra(b,"rb\n",0);
 			}
 		}
-	else
-	{
-	while((*a)->pos != d->holt_second && d->holt_second != -1)
-			rra(a,"rra\n");
-	if((*a)->pos == d->holt_second)
-	{
-		pa(a , b, "pb\n");
-			if((*b)->pos <= mid && ft_lstsize(*b) > 2 && l != 1)
-				ra(b,"rb\n");
 	}
-	}
+	// printf(">>>>>>>>>\n");
 	return 0;
 }
 
@@ -241,11 +297,6 @@ void get_stak_a(t_stack *b,t_data *d)
 	d->holt_second = -1;
 	d->holt_first = max_pos(b);
 	d->holt_second = min_pos(b);
-	// if(d->holt_first == d->holt_second)
-	// {
-	// 	d->holt_second = -1;
-	// 	return;
-	// }
 	while(b)
 	{
 		if(d->holt_second < b->pos && b->pos != d->holt_first)
@@ -257,7 +308,6 @@ void get_stak_a(t_stack *b,t_data *d)
 
 void check_top(t_data *d,t_stack **a,t_stack **b)
 {
-	// write(1,"check_top\n",10);
 	if(d->first_move <= d->seconde_move)
 		{
 			while ((*b)->pos != d->holt_second)
@@ -266,7 +316,7 @@ void check_top(t_data *d,t_stack **a,t_stack **b)
 					pa(b,a,"pa\n");
 				if((*b)->pos == d->holt_second)
 					break;
-				ra(b,"rb\n");
+				ra(b,"rb\n",1);
 			}
 			if((*b)->pos == d->holt_second)
 				pa(b,a,"pa\n");
@@ -279,7 +329,7 @@ void check_top(t_data *d,t_stack **a,t_stack **b)
 				pa(b,a,"pa\n");
 			if((*b)->pos == d->holt_first)
 				break;
-			ra(b,"rb\n");
+			ra(b,"rb\n",1);
 		}
 		if((*b)->pos == d->holt_first)
 			pa(b,a,"pa\n");
@@ -289,7 +339,6 @@ void check_top(t_data *d,t_stack **a,t_stack **b)
 
 void check_down(t_data *d,t_stack **a,t_stack **b)
 {
-	// write(1,"check_down\n",11);
 	if(d->first_move >= d->seconde_move)
 		{
 			while ((*b)->pos != d->holt_second)
@@ -321,11 +370,10 @@ void check_down(t_data *d,t_stack **a,t_stack **b)
 
 void check_diver1(t_data *d,t_stack **a,t_stack **b)
 {
-	// write(1,"check_diver1\n",13);
 	if(d->first_move <= ft_lstsize(*b) - d->seconde_move + 2)
 	{
 		while ((*b)->pos != d->holt_first)
-			ra(b,"rb\n");
+			ra(b,"rb\n",1);
 		if((*b)->pos == d->holt_first)
 			pa(b,a,"pa\n");
 		while ((*b)->pos != d->holt_second)
@@ -340,7 +388,7 @@ void check_diver1(t_data *d,t_stack **a,t_stack **b)
 		if((*b)->pos == d->holt_second)
 			pa(b,a,"pa\n");
 		while ((*b)->pos != d->holt_first)
-			ra(b,"rb\n");
+			ra(b,"rb\n",1);
 		if((*b)->pos == d->holt_first)
 				pa(b,a,"pa\n");
 			sa(a,"sa\n");
@@ -349,13 +397,12 @@ void check_diver1(t_data *d,t_stack **a,t_stack **b)
 
 void check_diver2(t_data *d,t_stack **a,t_stack **b)
 {
-	// write(1,"check_diver2\n",13);
 	if (d->seconde_move <= ft_lstsize(*b) - d->first_move + 2)
 	{
 		while ((*b)->pos != d->holt_second )
-			ra(b,"rb\n");
+			ra(b,"rb\n",1);
 		if((*b)->pos == d->holt_second)
-			pa(b,a,"pa1\n");
+			pa(b,a,"pa\n");
 		while ((*b)->pos != d->holt_first)
 			rra(b,"rrb\n");
 		if((*b)->pos == d->holt_first)
@@ -370,7 +417,7 @@ void check_diver2(t_data *d,t_stack **a,t_stack **b)
 		if((*b)->pos == d->holt_first)
 			pa(b,a,"pa\n");
 		while ((*b)->pos != d->holt_second)
-			ra(b,"rb\n");
+			ra(b,"rb\n",1);
 		if((*b)->pos == d->holt_second)
 			pa(b,a,"pa\n");
 	}
@@ -383,8 +430,6 @@ void push_a(t_data *d,t_stack **a,t_stack **b)
 	if(!*b)
 		return ;
 	get_stak_a(*b,d);
-	// printf(">%d\n",d->holt_first );
-	// printf(">>%d\n",d->holt_second );
 	if(d->holt_second == -1 && d->holt_first == -1)
 		return ;
 	if(d->holt_second == d->holt_first)
@@ -395,11 +440,6 @@ void push_a(t_data *d,t_stack **a,t_stack **b)
 	d->first_move = get_pos(*b,d->holt_first);
 	d->seconde_move = get_pos(*b,d->holt_second);
 	size = ft_lstsize(*b);
-    // if(d->holt_first == 13)
-    // {
-    //     printf("%d\n",d->first_move );
-    //      printf("%d\n",d->seconde_move );
-    // }
 	if (d->first_move <= size /2 && d->seconde_move <= size /2)
 		check_top(d,a,b);
 	else if (d->first_move >= size /2 && d->seconde_move >= size /2)
@@ -415,55 +455,33 @@ void push_a(t_data *d,t_stack **a,t_stack **b)
 void sort_100(t_stack **a,t_stack **b, int i)
 {
 	t_data d;
-	int num;
-	int j;
 	int m;
-	int l = 0;
-	int tmp;
-	t_stack *tmp1;
 	d.chunck = -1;
-	j = 1;
-	num = i  / 9 +  i % 9  ;
-	if(ft_lstsize(*a) <= 100)
-			num = i  / 4 +  i % 4  ;
+	d.num = i  / (9) +  i % (9) ;
+
 	while(*a)
 	{
-		tmp = d.chunck;
-		if(ft_lstsize(*a) <= 100)
-		{
-			// l = 1;
-			num = i  / 12 +  i % 12 ;
-		}
-		d.chunck = d.chunck + num;
+		calcule_chunk_and_middle(&d ,a ,b , i);
 		m = 0;
-		// printf("-------------");
 		while(!m)
 		{
-			// printf(">>>>>>>>>>>\n");
-			// printf("chunck = %d\n", d.chunck);
-			// printf("mide = %d\n",tmp + num / 2);
-			m = push_b(&d,a,b,tmp + num / 2,l);
-			// printf(">>>>>>>>>>>\n");
+			m = push_b(&d,a,b ,i);
 		}
-		j++;
 	}
-	// 
-	// while(tmp1)
-	// {
-	// 	printf("<%d>\n",tmp1->pos);
-	// 	tmp1= tmp1->next;
-	// }
 
-	int k = 0;
-	while((*b) != NULL)
+	// t_stack *tmp;
+
+	// tmp = *b;
+	// while(tmp)
+	// {
+	// 	printf("%d\n",tmp->pos);
+	// 	tmp = tmp->next;
+	// }
+	// int k=0;
+	while( (*b)) 
 	{
-        
 		push_a(&d,a,b);
-    // if (k == 486)
-    //     break;
 	}
-	// printf("size b = %d",ft_lstsize(*b));
-	// printf("size a= %d",ft_lstsize(*a));
 }
 
 
@@ -482,9 +500,7 @@ void sort_size(t_stack **a,t_stack **b,int i)
 		sort_4(a,b);
 	else if(i <= 5)
 		sort_5(a,b);
-	else  if (i   <= 100)
-		sort_100(a,b ,i);
-	else  if (i   > 100)
+	else  if (i  > 5)
 		sort_100(a,b ,i);
 }
 
