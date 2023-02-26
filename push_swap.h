@@ -12,6 +12,7 @@ typedef struct stract
     int     first_move;
     int     seconde_move;
     char    *str;
+    char	**str2;
     int     num;
     int     tmp;
     int     mid;
@@ -35,8 +36,5 @@ int min_pos(t_stack *a);
 int max_pos(t_stack *a);
 int get_pos(t_stack *a,int pos);
 
-
 #endif
-
-
 

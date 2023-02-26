@@ -6,29 +6,27 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 00:35:51 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/16 05:27:56 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/25 16:11:55 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "push_swap.h"
+#include "push_swap.h"
 
-void indice(t_stack *a)
+void	indice(t_stack *a)
 {
-	t_stack *tmp;
-	t_stack *tmp2;
-	
+	t_stack	*tmp;
+	t_stack	*tmp2;
+
 	tmp2 = a;
-	while(a)
+	while (a)
 	{
 		tmp = tmp2;
-		while(tmp)
+		while (tmp)
 		{
-			if(a->content >= tmp->content )
+			if (a->content >= tmp->content)
 				a->pos += 1;
 			tmp = tmp->next;
 		}
 		a = a->next;
 	}
 }
-
-
