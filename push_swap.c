@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:51:09 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/26 13:08:14 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/26 22:08:59 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,10 @@ t_stack	*make_stack(char **str)
 
 void	duplicat_number(t_stack *a)
 {
+	// atexit(ff);
+	// int fd = open("out.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	// dup2(fd,1);
+	// close(fd);
 	t_stack	*tmp;
 	t_stack	*tmp2;
 
@@ -121,10 +125,6 @@ void	duplicat_number(t_stack *a)
 	}
 }
 
-void parse()
-{
-	
-}
 
 
 int	main(int argc, char **argv)
@@ -133,11 +133,10 @@ int	main(int argc, char **argv)
 	int		i;
 	t_stack	*a;
 	t_stack	*b;
+	// int fd = open("out.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	// dup2(fd,1);
+	// close(fd);
 
-
-	int fd = open("out.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	dup2(fd,1);
-	close(fd);
 	b = NULL;
 	if (argc == 1)
 	{

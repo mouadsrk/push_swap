@@ -23,7 +23,7 @@ void sa(t_stack **a ,char *str);
 void ss(t_stack **a,t_stack **b);
 void pa(t_stack **a,t_stack **b , char *);
 void ra(t_stack **a,char *str, int i);
-void rr(t_stack **a,t_stack **b,int i);
+void rr(t_stack **a,t_stack **b);
 void rra(t_stack **a, char *str);
 void rrr(t_stack **a,t_stack **b);
 void indice(t_stack *a);

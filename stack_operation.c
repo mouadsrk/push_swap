@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:36:59 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/26 13:13:43 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/26 21:21:23 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,9 @@ void	ra(t_stack **a, char *str, int i)
 	tmp2->next = NULL;
 }
 
-void	rr(t_stack **a, t_stack **b, int i)
+void	rr(t_stack **a, t_stack **b)
 {
-	if (i == 0)
-		write(1, "mm\n", 3);
+	write(1, "rr\n", 3);
 	ra(a, "ra\n", 0);
 	ra(b, "rb\n", 0);
 }
