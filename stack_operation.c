@@ -6,22 +6,20 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:36:59 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/26 21:21:23 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/27 19:01:11 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_stack **a, char *str)
+void	sa(t_stack **a, char *str, int i)
 {
 	t_stack	*tmp;
 
 	if (!a)
-	{
-		printf("erro\n");
 		return ;
-	}
-	write(1, str, ft_strlen(str));
+	if (i == 1)
+		write(1, str, ft_strlen(str));
 	tmp = *a;
 	(*a) = (*a)->next;
 	tmp->next = (*a)->next;
@@ -30,8 +28,9 @@ void	sa(t_stack **a, char *str)
 
 void	ss(t_stack **a, t_stack **b)
 {
-	sa(a, "sa\n");
-	sa(b, "sb\n");
+	write(1, "ss\n", 3);
+	sa(a, "sa\n", 0);
+	sa(b, "sb\n", 0);
 }
 
 void	pa(t_stack **a, t_stack **b, char *str)
@@ -39,10 +38,7 @@ void	pa(t_stack **a, t_stack **b, char *str)
 	t_stack	*tmp;
 
 	if (!*a)
-	{
-		printf("erro\n");
 		return ;
-	}
 	write(1, str, ft_strlen(str));
 	tmp = *a;
 	*a = tmp->next;
@@ -56,10 +52,7 @@ void	ra(t_stack **a, char *str, int i)
 	t_stack	*tmp2;
 
 	if (!*a)
-	{
-		printf("erro\n");
 		return ;
-	}
 	if (i == 1)
 		write(1, str, ft_strlen(str));
 	tmp = *a;
@@ -76,32 +69,4 @@ void	rr(t_stack **a, t_stack **b)
 	write(1, "rr\n", 3);
 	ra(a, "ra\n", 0);
 	ra(b, "rb\n", 0);
-}
-
-void	rra(t_stack **a ,char *str)
-{
-	t_stack	*tmp;
-	t_stack	*tmp2;
-
-	if (!*a)
-	{
-		printf("erro\n");
-		return ;
-	}
-	write(1, str, ft_strlen(str));
-	tmp = *a;
-	tmp2 = *a;
-	while (tmp->next)
-	tmp = tmp->next;
-	while (tmp2->next != tmp)
-	tmp2 = tmp2->next;
-	tmp2->next = NULL;
-	tmp->next = *a;
-	*a = tmp;
-}
-
-void	rrr(t_stack **a, t_stack **b)
-{
-	rra(a, "rra\n");
-	rra(b, "rrb\n");
 }

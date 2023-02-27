@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   indice.c                                           :+:      :+:    :+:   */
+/*   stack_operation2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/16 00:35:51 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/25 16:11:55 by mserrouk         ###   ########.fr       */
+/*   Created: 2023/02/27 14:27:56 by mserrouk          #+#    #+#             */
+/*   Updated: 2023/02/27 19:01:24 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	indice(t_stack *a)
+void	rra(t_stack **a, char *str, int i)
 {
 	t_stack	*tmp;
 	t_stack	*tmp2;
 
-	tmp2 = a;
-	while (a)
-	{
-		tmp = tmp2;
-		while (tmp)
-		{
-			if (a->content >= tmp->content)
-				a->pos += 1;
-			tmp = tmp->next;
-		}
-		a = a->next;
-	}
+	if (!*a)
+		return ;
+	if (i == 1)
+		write(1, str, ft_strlen(str));
+	tmp = *a;
+	tmp2 = *a;
+	while (tmp->next)
+	tmp = tmp->next;
+	while (tmp2->next != tmp)
+	tmp2 = tmp2->next;
+	tmp2->next = NULL;
+	tmp->next = *a;
+	*a = tmp;
+}
+
+void	rrr(t_stack **a, t_stack **b)
+{
+	write(1, "rrr\n", 4);
+	rra(a, "rra\n", 0);
+	rra(b, "rrb\n", 0);
 }
