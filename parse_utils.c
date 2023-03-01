@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 00:35:51 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/27 16:38:35 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:20:13 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	check_is_empty(char *str)
 	}
 	if (j == 0)
 	{
-		write(1, "error\n", 6);
+		write(2, "error\n", 6);
 		exit(1);
 	}
 }
@@ -54,7 +54,6 @@ void	check_is_empty(char *str)
 int	check_sort(t_stack *a)
 {
 	int	i;
-	int	j;
 
 	if (!a)
 		return (0);
@@ -88,7 +87,7 @@ void	check_numbers_digit(char *num)
 		if ((c == 1 && (num[i] == '-' || num[i] == '+'))
 			|| ((num[i] != '-' && num[i] != '+') && !ft_isdigit(num[i])))
 		{
-			write(1, "error\n", 6);
+			write(2, "error\n", 6);
 			exit(1);
 		}
 	}
@@ -112,7 +111,7 @@ void	duplicat_number(t_stack *a)
 		{
 			if (tmp->content == tmp2->content)
 			{
-				write(1, "error\n", 6);
+				write(2, "error\n", 6);
 				exit(1);
 			}
 			tmp2 = tmp2->next;

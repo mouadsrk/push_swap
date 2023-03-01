@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:36:20 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/27 19:38:01 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:14:48 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	check_diver1(t_data *d, t_stack **a, t_stack **b)
 			ra(b, "rb\n", 1);
 		if ((*b)->pos == d->hlt_1)
 			pa(b, a, "pa\n");
-		sa(a,"sa\n", 1);
+		sa(a, "sa\n", 1);
 	}
 }
 
@@ -52,7 +52,7 @@ void	check_diver2(t_data *d, t_stack **a, t_stack **b)
 		if ((*b)->pos == d->hlt_1)
 			pa(b, a, "pa\n");
 		if (d->hlt_2 != d->hlt_1)
-			sa(a,"sa\n", 1);
+			sa(a, "sa\n", 1);
 	}
 	else if (d->mv_2 > ft_lstsize(*b) - d->mv_1 + 2)
 	{

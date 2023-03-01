@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:11:37 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/27 14:39:16 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:51:21 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	get_pos(t_stack *a, int pos)
 	return (-1);
 }
 
-void	calcule_chunk_and_middle(t_data *d, t_stack **a, t_stack **b, int i)
+void	calcule_chunk_and_middle(t_data *d, t_stack **a)
 {
 	d->tmp = d->chunck;
 	if (ft_lstsize(*a) <= 100)

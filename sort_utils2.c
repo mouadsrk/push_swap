@@ -6,13 +6,13 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:18:29 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/27 14:39:22 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/28 13:52:21 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	push_b_data(t_data *d, t_stack **a, t_stack **b)
+int	push_b_data(t_data *d, t_stack **a)
 {
 	if (!*a)
 		return (1);

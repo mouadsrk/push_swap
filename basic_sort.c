@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 05:28:32 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/27 19:38:01 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:13:59 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	sort_3(t_stack **a)
 	i2 = (*a)->next->content;
 	i3 = (*a)->next->next->content;
 	if ((i1 > i2 && i1 < i3) || (i1 > i2 && i2 > i3) || (i1 < i3 && i3 < i2))
-		sa(a,"sa\n", 1);
+		sa(a, "sa\n", 1);
 	i1 = (*a)->content;
 	i2 = (*a)->next->content;
 	i3 = (*a)->next->next->content;
@@ -81,7 +81,7 @@ void	sort_4(t_stack **a, t_stack **b)
 	}
 	else if (i2 == 0)
 	{
-		sa(a,"sa\n", 1);
+		sa(a, "sa\n", 1);
 		pa(a, b, "pb\n");
 		sort_3(a);
 		pa(b, a, "pa\n");
@@ -110,10 +110,10 @@ void	sort_5(t_stack **a, t_stack **b)
 
 void	sort_size(t_stack **a, t_stack **b, int i)
 {
-	t_stack	*tmp;
-
-	if (i < 3)
-		sa(a,"sa\n", 1);
+	if (i == 1)
+		return ;
+	if (i == 2)
+		sa(a, "sa\n", 1);
 	else if (i <= 3)
 		sort_3(a);
 	else if (i <= 4)
@@ -121,5 +121,5 @@ void	sort_size(t_stack **a, t_stack **b, int i)
 	else if (i <= 5)
 		sort_5(a, b);
 	else if (i > 5)
-		sort_100(a, b, i);
+		sort_100(a, b);
 }

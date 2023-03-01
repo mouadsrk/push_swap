@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:36:59 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/27 19:01:11 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:53:01 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sa(t_stack **a, char *str, int i)
 {
 	t_stack	*tmp;
 
-	if (!a)
+	if (!a || ft_lstsize((*a)) < 2)
 		return ;
 	if (i == 1)
 		write(1, str, ft_strlen(str));
@@ -26,9 +26,10 @@ void	sa(t_stack **a, char *str, int i)
 	(*a)->next = tmp;
 }
 
-void	ss(t_stack **a, t_stack **b)
+void	ss(t_stack **a, t_stack **b, int i)
 {
-	write(1, "ss\n", 3);
+	if (i == 1)
+		write(1, "ss\n", 3);
 	sa(a, "sa\n", 0);
 	sa(b, "sb\n", 0);
 }
@@ -51,7 +52,7 @@ void	ra(t_stack **a, char *str, int i)
 	t_stack	*tmp;
 	t_stack	*tmp2;
 
-	if (!*a)
+	if (!a || ft_lstsize((*a)) < 2)
 		return ;
 	if (i == 1)
 		write(1, str, ft_strlen(str));
@@ -64,9 +65,10 @@ void	ra(t_stack **a, char *str, int i)
 	tmp2->next = NULL;
 }
 
-void	rr(t_stack **a, t_stack **b)
+void	rr(t_stack **a, t_stack **b, int i)
 {
-	write(1, "rr\n", 3);
+	if (i == 1)
+		write(1, "rr\n", 3);
 	ra(a, "ra\n", 0);
 	ra(b, "rb\n", 0);
 }

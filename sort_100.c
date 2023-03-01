@@ -6,17 +6,17 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:11:50 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/27 14:43:19 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:50:43 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	push_b(t_data *d, t_stack **a, t_stack **b, int i)
+int	push_b(t_data *d, t_stack **a, t_stack **b)
 {
 	int	m;
 
-	m = push_b_data(d, a, b);
+	m = push_b_data(d, a);
 	if (m == 1)
 		return (1);
 	while ((*a)->pos != d->hlt_1
@@ -26,11 +26,11 @@ int	push_b(t_data *d, t_stack **a, t_stack **b, int i)
 		rra(a, "rra\n", 1);
 	if ((*a)->pos == d->hlt_1 || (*a)->pos == d->hlt_2)
 		pa(a, b, "pb\n");
-	if (push_b_data(d, a, b) == 0)
+	if (push_b_data(d, a) == 0)
 	{
 		if ((*a)->pos != d->hlt_1 && d->mv_1 <= d->mv_2
 			&& (*b)->pos <= d->mid && ft_lstsize(*b) > 2)
-			rr(a, b);
+			rr(a, b, 1);
 		else if ((*b)->pos <= d->mid && ft_lstsize(*b) > 2)
 			ra(b, "rb\n", 1);
 	}
@@ -66,7 +66,7 @@ void	push_a(t_data *d, t_stack **a, t_stack **b)
 		check_diver2(d, a, b);
 }
 
-void	sort_100(t_stack **a, t_stack **b, int i)
+void	sort_100(t_stack **a, t_stack **b)
 {
 	t_data	d;
 	int		m;
@@ -75,11 +75,11 @@ void	sort_100(t_stack **a, t_stack **b, int i)
 	d.num = 56 ;
 	while (*a)
 	{
-		calcule_chunk_and_middle(&d, a, b, i);
+		calcule_chunk_and_middle(&d, a);
 		m = 0;
 		while (!m)
 		{
-			m = push_b(&d, a, b, i);
+			m = push_b(&d, a, b);
 		}
 	}
 	while ((*b))

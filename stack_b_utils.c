@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:22:17 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/27 19:38:01 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:14:40 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	check_top_norm(t_data *d, t_stack **a, t_stack **b)
 	}
 	if ((*b)->pos == d->hlt_1)
 		pa(b, a, "pa\n");
-	sa(a,"sa\n", 1);
+	sa(a, "sa\n", 1);
 }
 
 void	check_top(t_data *d, t_stack **a, t_stack **b)
@@ -60,7 +60,7 @@ void	check_down_norm(t_data *d, t_stack **a, t_stack **b)
 	}
 	if ((*b)->pos == d->hlt_1)
 		pa(b, a, "pa\n");
-	sa(a,"sa\n", 1);
+	sa(a, "sa\n", 1);
 }
 
 void	check_down(t_data *d, t_stack **a, t_stack **b)

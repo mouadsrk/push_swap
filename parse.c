@@ -6,7 +6,7 @@
 /*   By: mserrouk <mserrouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:52:05 by mserrouk          #+#    #+#             */
-/*   Updated: 2023/02/27 16:59:49 by mserrouk         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:56:25 by mserrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@ void	parse(int argc, char **argv, t_data	*d)
 {
 	int		i;
 
-	if (argc == 1)
-	{
-		write(1, "error\n", 6);
-		exit(1);
-	}
 	i = 1;
 	while (i < argc)
 	{
